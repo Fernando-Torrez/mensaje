@@ -11,37 +11,59 @@
             padding: 0;
             font-family: 'Raleway', sans-serif;
             background: #f5f5f5;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
             color: #333;
             background-image: radial-gradient(circle, #e6e6fa 0%, #f0f8ff 100%);
+            overflow-x: hidden;
         }
 
         /* Contenedor principal */
         .scene {
             width: 100%;
-            height: 100%;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             perspective: 1000px;
         }
 
-        /* Estilo del sobre cerrado */
+        /* Sobre con forma realista */
         .envelope {
             position: relative;
-            width: 400px;
-            height: 280px;
+            width: 90%;
+            max-width: 400px;
+            height: 0;
+            padding-bottom: 60%; /* Proporción de un sobre real */
             background: #f9f3e9;
-            border-radius: 5px;
+            border-radius: 3px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             cursor: pointer;
             transform-style: preserve-3d;
             transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             z-index: 10;
+            margin: 20px 0;
+            border: 1px solid #d9c7b8;
+        }
+
+        /* Solapa triangular característica */
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            padding-bottom: 40%; /* Altura de la solapa */
+            background: #e8d8c3;
+            clip-path: polygon(0 0, 50% 70%, 100% 0);
+            transform-origin: top;
+            transition: transform 0.8s ease;
+            z-index: 2;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         /* Parte frontal del sobre */
@@ -50,7 +72,7 @@
             width: 100%;
             height: 100%;
             background: #f9f3e9;
-            border-radius: 5px;
+            border-radius: 3px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -58,72 +80,69 @@
             backface-visibility: hidden;
             transform-origin: top;
             transition: transform 0.8s ease;
-            border: 1px solid #d9c7b8;
             box-sizing: border-box;
-        }
-
-        /* Solapa del sobre */
-        .envelope-flap {
-            position: absolute;
-            top: -5px;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 200px solid transparent;
-            border-right: 200px solid transparent;
-            border-top: 130px solid #e8d8c3;
-            transform-origin: top;
-            transition: transform 0.8s ease;
-            z-index: 2;
+            overflow: hidden;
         }
 
         /* Sello de cera */
         .wax-seal {
             position: absolute;
-            bottom: 20px;
-            width: 50px;
-            height: 50px;
+            bottom: 15%;
+            width: 15%;
+            max-width: 50px;
+            height: 0;
+            padding-bottom: 15%;
             background: #c0392b;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 20px;
+            font-size: clamp(16px, 3vw, 20px);
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
             z-index: 3;
             animation: pulse 2s infinite;
+            border: 1px solid #a5281b;
         }
 
         /* Mensaje para abrir */
         .open-message {
-            margin-top: 30px;
+            position: absolute;
+            top: 60%;
             font-family: 'Dancing Script', cursive;
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
             color: #5a67d8;
             text-align: center;
             opacity: 0.8;
+            width: 100%;
+            padding: 0 15px;
+            box-sizing: border-box;
         }
 
-        /* Contenido de la carta (oculto inicialmente) */
+        /* Contenido de la carta */
         .letter-content {
             position: absolute;
-            width: 380px;
-            height: 500px; /* Aumenté la altura para que quepa todo */
+            width: 90%;
+            max-width: 380px;
+            height: auto;
+            min-height: 500px;
+            max-height: 80vh;
             background: white;
-            padding: 25px;
-            border-radius: 5px;
+            padding: 8%;
+            border-radius: 2px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transform: translateY(200%) scale(0.5);
             opacity: 0;
             transition: all 0.8s ease 0.4s;
             z-index: 1;
             overflow: hidden;
+            box-sizing: border-box;
+            border: 1px solid #e0e0e0;
         }
 
-        /* Cuando el sobre está abierto */
+        /* Efecto de sobre abierto */
         .envelope.open {
-            transform: translateY(-180px);
+            transform: translateY(-10vh);
         }
 
         .envelope.open .envelope-flap {
@@ -139,17 +158,17 @@
             opacity: 1;
         }
 
-        /* Estilos para el contenido de la carta */
+        /* Estilos del contenido */
         .title {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 5vw, 2rem);
             color: #5a67d8;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
             text-align: center;
         }
 
         .message {
-            font-size: 0.95rem;
+            font-size: clamp(0.85rem, 3vw, 0.95rem);
             line-height: 1.5;
             color: #4a5568;
             margin-bottom: 0.8rem;
@@ -163,28 +182,29 @@
         .strength-elements {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
             margin: 1.2rem 0;
+            flex-wrap: wrap;
         }
 
         .strength-icon {
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
             animation: bounce 2s infinite;
         }
 
         .signature {
             font-family: 'Dancing Script', cursive;
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
             color: #5a67d8;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             text-align: center;
         }
         
         .closing {
             font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             color: #333;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             text-align: right;
             font-style: italic;
         }
@@ -222,6 +242,46 @@
         @keyframes twinkle {
             0%, 100% { opacity: 0; transform: scale(0.5); }
             50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Ajustes para móviles */
+        @media (max-width: 600px) {
+            .envelope {
+                max-width: 300px;
+                padding-bottom: 70%; /* Sobre más alto en móviles */
+            }
+            
+            .letter-content {
+                max-height: 70vh;
+                min-height: 450px;
+                padding: 6%;
+            }
+            
+            .envelope.open {
+                transform: translateY(-5vh);
+            }
+            
+            .envelope-flap {
+                padding-bottom: 45%; /* Solapa más pronunciada */
+            }
+        }
+
+        @media (max-width: 400px) {
+            .letter-content {
+                padding: 5%;
+            }
+            
+            .title {
+                margin-bottom: 0.8rem;
+            }
+            
+            .strength-elements {
+                margin: 1rem 0;
+            }
+            
+            .wax-seal {
+                bottom: 12%;
+            }
         }
     </style>
 </head>
