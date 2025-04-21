@@ -11,59 +11,37 @@
             padding: 0;
             font-family: 'Raleway', sans-serif;
             background: #f5f5f5;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
             color: #333;
             background-image: radial-gradient(circle, #e6e6fa 0%, #f0f8ff 100%);
-            overflow-x: hidden;
         }
 
         /* Contenedor principal */
         .scene {
             width: 100%;
-            padding: 20px;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             perspective: 1000px;
         }
 
-        /* Sobre con forma realista */
+        /* Estilo del sobre cerrado */
         .envelope {
             position: relative;
-            width: 90%;
-            max-width: 400px;
-            height: 0;
-            padding-bottom: 60%;
+            width: 400px;
+            height: 280px;
             background: #f9f3e9;
-            border-radius: 3px;
+            border-radius: 5px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             cursor: pointer;
             transform-style: preserve-3d;
             transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
             z-index: 10;
-            margin: 20px 0;
-            border: 1px solid #d9c7b8;
-        }
-
-        /* Solapa triangular característica */
-        .envelope-flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 0;
-            padding-bottom: 40%;
-            background: #e8d8c3;
-            clip-path: polygon(0 0, 50% 70%, 100% 0);
-            transform-origin: top;
-            transition: transform 0.8s ease;
-            z-index: 2;
-            border-top-left-radius: 3px;
-            border-top-right-radius: 3px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         /* Parte frontal del sobre */
@@ -72,7 +50,7 @@
             width: 100%;
             height: 100%;
             background: #f9f3e9;
-            border-radius: 3px;
+            border-radius: 5px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -80,76 +58,72 @@
             backface-visibility: hidden;
             transform-origin: top;
             transition: transform 0.8s ease;
+            border: 1px solid #d9c7b8;
             box-sizing: border-box;
-            overflow: hidden;
         }
 
-        /* Sello de cera mejorado */
+        /* Solapa del sobre */
+        .envelope-flap {
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 200px solid transparent;
+            border-right: 200px solid transparent;
+            border-top: 130px solid #e8d8c3;
+            transform-origin: top;
+            transition: transform 0.8s ease;
+            z-index: 2;
+        }
+
+        /* Sello de cera */
         .wax-seal {
             position: absolute;
-            bottom: 15%;
-            width: 15%;
-            max-width: 50px;
-            height: 15%;
-            max-height: 50px;
+            bottom: 20px;
+            width: 50px;
+            height: 50px;
             background: #c0392b;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
+            color: white;
+            font-size: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
             z-index: 3;
             animation: pulse 2s infinite;
-            border: 1px solid #a5281b;
-        }
-
-        /* Corazón perfectamente centrado */
-        .wax-seal-heart {
-            font-size: 60%; /* Tamaño relativo al sello */
-            line-height: 1;
-            margin-top: -5%; /* Ajuste fino de centrado vertical */
-            text-align: center;
-            width: 100%;
         }
 
         /* Mensaje para abrir */
         .open-message {
-            position: absolute;
-            top: 60%;
+            margin-top: 30px;
             font-family: 'Dancing Script', cursive;
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-size: 1.5rem;
             color: #5a67d8;
             text-align: center;
             opacity: 0.8;
-            width: 100%;
-            padding: 0 15px;
-            box-sizing: border-box;
         }
 
-        /* Contenido de la carta */
+        /* Contenido de la carta (oculto inicialmente) */
         .letter-content {
             position: absolute;
-            width: 90%;
-            max-width: 380px;
-            height: auto;
-            min-height: 500px;
-            max-height: 80vh;
+            width: 380px;
+            height: 500px; /* Aumenté la altura para que quepa todo */
             background: white;
-            padding: 8%;
-            border-radius: 2px;
+            padding: 25px;
+            border-radius: 5px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transform: translateY(200%) scale(0.5);
             opacity: 0;
             transition: all 0.8s ease 0.4s;
             z-index: 1;
             overflow: hidden;
-            box-sizing: border-box;
-            border: 1px solid #e0e0e0;
         }
 
-        /* Efecto de sobre abierto */
+        /* Cuando el sobre está abierto */
         .envelope.open {
-            transform: translateY(-10vh);
+            transform: translateY(-180px);
         }
 
         .envelope.open .envelope-flap {
@@ -165,17 +139,17 @@
             opacity: 1;
         }
 
-        /* Estilos del contenido */
+        /* Estilos para el contenido de la carta */
         .title {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-size: 2rem;
             color: #5a67d8;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             text-align: center;
         }
 
         .message {
-            font-size: clamp(0.85rem, 3vw, 0.95rem);
+            font-size: 0.95rem;
             line-height: 1.5;
             color: #4a5568;
             margin-bottom: 0.8rem;
@@ -189,29 +163,28 @@
         .strength-elements {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
             margin: 1.2rem 0;
-            flex-wrap: wrap;
         }
 
         .strength-icon {
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-size: 1.5rem;
             animation: bounce 2s infinite;
         }
 
         .signature {
             font-family: 'Dancing Script', cursive;
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-size: 1.5rem;
             color: #5a67d8;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             text-align: center;
         }
         
         .closing {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-size: 1.2rem;
             color: #333;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             text-align: right;
             font-style: italic;
         }
@@ -250,50 +223,6 @@
             0%, 100% { opacity: 0; transform: scale(0.5); }
             50% { opacity: 1; transform: scale(1); }
         }
-
-        /* Ajustes para móviles */
-        @media (max-width: 600px) {
-            .envelope {
-                max-width: 300px;
-                padding-bottom: 70%;
-            }
-            
-            .letter-content {
-                max-height: 70vh;
-                min-height: 450px;
-                padding: 6%;
-            }
-            
-            .envelope.open {
-                transform: translateY(-5vh);
-            }
-            
-            .envelope-flap {
-                padding-bottom: 45%;
-            }
-            
-            .wax-seal-heart {
-                margin-top: -8%; /* Ajuste adicional para móviles */
-            }
-        }
-
-        @media (max-width: 400px) {
-            .letter-content {
-                padding: 5%;
-            }
-            
-            .title {
-                margin-bottom: 0.8rem;
-            }
-            
-            .strength-elements {
-                margin: 1rem 0;
-            }
-            
-            .wax-seal {
-                bottom: 12%;
-            }
-        }
     </style>
 </head>
 <body>
@@ -303,9 +232,7 @@
         <div class="envelope" id="envelope">
             <div class="envelope-flap"></div>
             <div class="envelope-front">
-                <div class="wax-seal">
-                    <div class="wax-seal-heart">❤️</div>
-                </div>
+                <div class="wax-seal">❤️</div>
                 <div class="open-message">Presiona aquí para abrir</div>
             </div>
             
