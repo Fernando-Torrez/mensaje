@@ -36,7 +36,7 @@
             width: 90%;
             max-width: 400px;
             height: 0;
-            padding-bottom: 60%; /* Proporción de un sobre real */
+            padding-bottom: 60%;
             background: #f9f3e9;
             border-radius: 3px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
@@ -55,7 +55,7 @@
             left: 0;
             width: 100%;
             height: 0;
-            padding-bottom: 40%; /* Altura de la solapa */
+            padding-bottom: 40%;
             background: #e8d8c3;
             clip-path: polygon(0 0, 50% 70%, 100% 0);
             transform-origin: top;
@@ -84,25 +84,32 @@
             overflow: hidden;
         }
 
-        /* Sello de cera */
+        /* Sello de cera mejorado */
         .wax-seal {
             position: absolute;
             bottom: 15%;
             width: 15%;
             max-width: 50px;
-            height: 0;
-            padding-bottom: 15%;
+            height: 15%;
+            max-height: 50px;
             background: #c0392b;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
-            font-size: clamp(16px, 3vw, 20px);
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
             z-index: 3;
             animation: pulse 2s infinite;
             border: 1px solid #a5281b;
+        }
+
+        /* Corazón perfectamente centrado */
+        .wax-seal-heart {
+            font-size: 60%; /* Tamaño relativo al sello */
+            line-height: 1;
+            margin-top: -5%; /* Ajuste fino de centrado vertical */
+            text-align: center;
+            width: 100%;
         }
 
         /* Mensaje para abrir */
@@ -248,7 +255,7 @@
         @media (max-width: 600px) {
             .envelope {
                 max-width: 300px;
-                padding-bottom: 70%; /* Sobre más alto en móviles */
+                padding-bottom: 70%;
             }
             
             .letter-content {
@@ -262,7 +269,11 @@
             }
             
             .envelope-flap {
-                padding-bottom: 45%; /* Solapa más pronunciada */
+                padding-bottom: 45%;
+            }
+            
+            .wax-seal-heart {
+                margin-top: -8%; /* Ajuste adicional para móviles */
             }
         }
 
@@ -292,7 +303,9 @@
         <div class="envelope" id="envelope">
             <div class="envelope-flap"></div>
             <div class="envelope-front">
-                <div class="wax-seal">❤️</div>
+                <div class="wax-seal">
+                    <div class="wax-seal-heart">❤️</div>
+                </div>
                 <div class="open-message">Presiona aquí para abrir</div>
             </div>
             
