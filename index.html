@@ -3,77 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mensaje para una Persona Extraordinaria</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+    <title>Carta Especial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Raleway:wght@400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: 'Raleway', sans-serif;
-            background: linear-gradient(-45deg, #667eea, #764ba2, #6B8DD6, #8E37D7);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: #f5f5f5;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             color: #333;
+            background-image: radial-gradient(circle, #e6e6fa 0%, #f0f8ff 100%);
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .container {
-            text-align: center;
+        /* Contenedor principal */
+        .scene {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             perspective: 1000px;
         }
 
-        .message-box {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 3rem 4rem;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            animation: fadeInUp 1.5s ease, subtleTilt 8s infinite alternate;
-            transform-style: preserve-3d;
-            max-width: 600px;
+        /* Estilo del sobre cerrado */
+        .envelope {
             position: relative;
+            width: 400px;
+            height: 280px;
+            background: #f9f3e9;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 10;
+        }
+
+        /* Parte frontal del sobre */
+        .envelope-front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #f9f3e9;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backface-visibility: hidden;
+            transform-origin: top;
+            transition: transform 0.8s ease;
+            border: 1px solid #d9c7b8;
+            box-sizing: border-box;
+        }
+
+        /* Solapa del sobre */
+        .envelope-flap {
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 200px solid transparent;
+            border-right: 200px solid transparent;
+            border-top: 130px solid #e8d8c3;
+            transform-origin: top;
+            transition: transform 0.8s ease;
+            z-index: 2;
+        }
+
+        /* Sello de cera */
+        .wax-seal {
+            position: absolute;
+            bottom: 20px;
+            width: 50px;
+            height: 50px;
+            background: #c0392b;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            z-index: 3;
+            animation: pulse 2s infinite;
+        }
+
+        /* Mensaje para abrir */
+        .open-message {
+            margin-top: 30px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #5a67d8;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        /* Contenido de la carta (oculto inicialmente) */
+        .letter-content {
+            position: absolute;
+            width: 380px;
+            height: 500px; /* Aumenté la altura para que quepa todo */
+            background: white;
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(200%) scale(0.5);
+            opacity: 0;
+            transition: all 0.8s ease 0.4s;
+            z-index: 1;
             overflow: hidden;
         }
 
-        .message-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                rgba(255, 255, 255, 0.1),
-                rgba(255, 255, 255, 0)
-            );
-            transform: rotate(30deg);
-            animation: shine 6s infinite;
+        /* Cuando el sobre está abierto */
+        .envelope.open {
+            transform: translateY(-180px);
         }
 
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope.open .envelope-front {
+            transform: translateY(-50%) rotateX(180deg);
+        }
+
+        .envelope.open .letter-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        /* Estilos para el contenido de la carta */
         .title {
             font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
+            font-size: 2rem;
             color: #5a67d8;
-            margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            animation: textGlow 3s infinite alternate;
+            margin-bottom: 1.2rem;
+            text-align: center;
         }
 
         .message {
-            font-size: 1.3rem;
-            line-height: 1.8;
+            font-size: 0.95rem;
+            line-height: 1.5;
             color: #4a5568;
-            margin-bottom: 2rem;
+            margin-bottom: 0.8rem;
         }
 
         .highlight {
@@ -84,47 +163,44 @@
         .strength-elements {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-top: 2rem;
+            gap: 15px;
+            margin: 1.2rem 0;
         }
 
         .strength-icon {
-            font-size: 2rem;
+            font-size: 1.5rem;
             animation: bounce 2s infinite;
         }
 
-        @keyframes fadeInUp {
-            from { 
-                opacity: 0;
-                transform: translateY(40px) rotateX(20deg);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0) rotateX(0);
-            }
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #5a67d8;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .closing {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #333;
+            margin-top: 2rem;
+            text-align: right;
+            font-style: italic;
         }
 
-        @keyframes subtleTilt {
-            0%, 100% { transform: rotateZ(-1deg); }
-            50% { transform: rotateZ(1deg); }
-        }
-
-        @keyframes shine {
-            0% { transform: rotate(30deg) translate(-30%, -30%); }
-            100% { transform: rotate(30deg) translate(30%, 30%); }
-        }
-
-        @keyframes textGlow {
-            from { text-shadow: 0 0 5px rgba(90, 103, 216, 0.3); }
-            to { text-shadow: 0 0 15px rgba(90, 103, 216, 0.6); }
+        /* Animaciones */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
         }
 
-        /* Estrellas animadas (representando logros) */
+        /* Estrellas de fondo */
         .stars {
             position: fixed;
             top: 0;
@@ -147,46 +223,41 @@
             0%, 100% { opacity: 0; transform: scale(0.5); }
             50% { opacity: 1; transform: scale(1); }
         }
-
-        /* Elemento de firma */
-        .signature {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem;
-            color: #5a67d8;
-            margin-top: 2rem;
-            animation: fadeIn 3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
     </style>
 </head>
 <body>
     <div class="stars" id="stars"></div>
     
-    <div class="container">
-        <div class="message-box">
-            <h1 class="title">Para una Persona Extraordinaria</h1>
-            <p class="message">
-                Aunque hoy pueda parecer difícil, <span class="highlight">tu fuerza</span> es mayor que cualquier obstáculo. 
-                Cada caso, cada desafío, ha demostrado la <span class="highlight">mujer valiosa</span> que eres.
-            </p>
-            <p class="message">
-                No te rindas, porque detrás de cada noche oscura viene un amanecer. 
-                <span class="highlight">Sabes que hay alguien que creía en ti</span> más de lo que las palabras pueden expresar, 
-                y quiere verte <span class="highlight">feliz y realizada</span>, como mereces.
-            </p>
-            
-            <div class="strength-elements">
-                <div class="strength-icon" style="animation-delay: 0s;">💪</div>
-                <div class="strength-icon" style="animation-delay: 0.5s;">⚖️</div>
-                <div class="strength-icon" style="animation-delay: 1s;">🌟</div>
-                <div class="strength-icon" style="animation-delay: 1.5s;">❤️</div>
+    <div class="scene">
+        <div class="envelope" id="envelope">
+            <div class="envelope-flap"></div>
+            <div class="envelope-front">
+                <div class="wax-seal">❤️</div>
+                <div class="open-message">Presiona aquí para abrir</div>
             </div>
             
-            <div class="signature">Con admiración y cariño</div>
+            <div class="letter-content">
+                <h1 class="title">Para una Persona Extraordinaria</h1>
+                <p class="message">
+                    Aunque hoy pueda parecer difícil, <span class="highlight">tu fuerza</span> es mayor que cualquier obstáculo. 
+                    Cada desafío ha demostrado la <span class="highlight">mujer valiosa</span> que eres.
+                </p>
+                <p class="message">
+                    No te rindas, porque detrás de cada noche oscura viene un amanecer. 
+                    <span class="highlight">Sabes que hay alguien que creía en ti</span> más de lo que las palabras pueden expresar, 
+                    y quiere verte <span class="highlight">feliz y realizada</span>, como mereces.
+                </p>
+                
+                <div class="strength-elements">
+                    <div class="strength-icon" style="animation-delay: 0s;">💪</div>
+                    <div class="strength-icon" style="animation-delay: 0.5s;">⚖️</div>
+                    <div class="strength-icon" style="animation-delay: 1s;">🌟</div>
+                    <div class="strength-icon" style="animation-delay: 1.5s;">❤️</div>
+                </div>
+                
+                <div class="signature">Con admiración y cariño</div>
+                <div class="closing">Atentamente<br>El Inge</div>
+            </div>
         </div>
     </div>
 
@@ -194,10 +265,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Crear estrellas
             const starsContainer = document.getElementById('stars');
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 30; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
-                star.style.width = Math.random() * 5 + 3 + 'px';
+                star.style.width = Math.random() * 4 + 2 + 'px';
                 star.style.height = star.style.width;
                 star.style.left = Math.random() * 100 + 'vw';
                 star.style.top = Math.random() * 100 + 'vh';
@@ -205,6 +276,20 @@
                 star.style.animationDelay = Math.random() * 5 + 's';
                 starsContainer.appendChild(star);
             }
+            
+            // Animación para abrir el sobre
+            const envelope = document.getElementById('envelope');
+            envelope.addEventListener('click', function() {
+                this.classList.toggle('open');
+                
+                // Cambiar el mensaje después de abrir
+                if (this.classList.contains('open')) {
+                    const openMessage = this.querySelector('.open-message');
+                    setTimeout(() => {
+                        openMessage.textContent = "¡Gracias por abrir esta carta!";
+                    }, 1000);
+                }
+            });
             
             // Efecto de aparición secuencial de los elementos de fuerza
             const strengthIcons = document.querySelectorAll('.strength-icon');
